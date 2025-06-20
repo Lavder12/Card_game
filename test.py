@@ -19,6 +19,7 @@ BUTTON_TEXT_COLOR = (220, 220, 180)
 RED = (255, 100, 100)
 BLACK = (0, 0, 0)
 
+
 SETTINGS_FILE = "settings.json"
 
 def load_settings():
@@ -36,7 +37,6 @@ pygame.mixer.init()
 settings = load_settings()
 pygame.mixer.music.set_volume(0 if settings.get("muted", False) else settings.get("volume", 0.9))
 
-
 FONT = pygame.font.SysFont("consolas", 36)
 TITLE_FONT = pygame.font.SysFont("consolas", 60, bold=True)
 
@@ -50,8 +50,6 @@ try:
     pygame.mixer.music.play(-1)
 except Exception as e:
     print("Не удалось загрузить музыку. Убедитесь, что файл music/music.mp3 в папке с игрой.")
-
-
 
 
 def draw_text(text, x, y, color=TEXT_COLOR, font=FONT):
@@ -437,6 +435,7 @@ def settings_menu():
                     pygame.mixer.music.set_volume(volume)
 
 
+
 def difficulty_menu():
     while True:
         screen.fill(BG_COLOR)
@@ -485,12 +484,12 @@ while True:
             invalid_move_message = ""
 
         if delivered_caravans(player['caravans']) >= 2:
-            draw_text("Победа игрока!", 400, 550, RED)
+            draw_text("🎉 Победа игрока!", 400, 550, RED)
             pygame.display.flip()
             pygame.time.wait(2000)
             break
         if delivered_caravans(bot['caravans']) >= 2:
-            draw_text("Победа бота!", 400, 550, RED)
+            draw_text("🤖 Победа бота!", 400, 550, RED)
             pygame.display.flip()
             pygame.time.wait(2000)
             break

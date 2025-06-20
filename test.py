@@ -1,6 +1,8 @@
 import pygame
 import random
 import sys
+import json
+import os
 
 # === Настройки ===
 WIDTH, HEIGHT = 1280, 720
@@ -17,8 +19,23 @@ BUTTON_TEXT_COLOR = (220, 220, 180)
 RED = (255, 100, 100)
 BLACK = (0, 0, 0)
 
+SETTINGS_FILE = "settings.json"
+
+def load_settings():
+    if os.path.exists(SETTINGS_FILE):
+        with open(SETTINGS_FILE, "r") as f:
+            return json.load(f)
+    return {"volume": 0.9, "muted": False}
+
+def save_settings(settings):
+    with open(SETTINGS_FILE, "w") as f:
+        json.dump(settings, f)
+
 pygame.init()
 pygame.mixer.init()
+settings = load_settings()
+pygame.mixer.music.set_volume(0 if settings.get("muted", False) else settings.get("volume", 0.9))
+
 
 FONT = pygame.font.SysFont("consolas", 36)
 TITLE_FONT = pygame.font.SysFont("consolas", 60, bold=True)
@@ -29,10 +46,13 @@ pygame.display.set_caption("Караван (Fallout)")
 # Загрузка музыки (нужно иметь файл music/music.mp3)
 try:
     pygame.mixer.music.load("music/music.mp3")
-    pygame.mixer.music.set_volume(0.3)
+    pygame.mixer.music.set_volume(0.9)
     pygame.mixer.music.play(-1)
 except Exception as e:
     print("Не удалось загрузить музыку. Убедитесь, что файл music/music.mp3 в папке с игрой.")
+
+
+
 
 def draw_text(text, x, y, color=TEXT_COLOR, font=FONT):
     img = font.render(text, True, color)
@@ -331,12 +351,12 @@ def draw_game(player, bot, deck):
 def main_menu():
     while True:
         screen.fill(BG_COLOR)
-        draw_text("КАРАВАН", 380, 100, TEXT_COLOR, font=TITLE_FONT)
+        draw_text("Кортеж", 380, 100, TEXT_COLOR, font=TITLE_FONT)
 
         pos = pygame.mouse.get_pos()
-        play_hover, _ = draw_button("▶ Играть", 400, 220, 200, 60, BUTTON_COLOR, BUTTON_HOVER_COLOR, pos)
-        settings_hover, _ = draw_button("⚙ Настройки", 400, 300, 200, 60, BUTTON_COLOR, BUTTON_HOVER_COLOR, pos)
-        quit_hover, _ = draw_button("❌ Выход", 400, 380, 200, 60, (120, 40, 40), (180, 60, 60), pos)
+        play_hover, _ = draw_button("Играть", 400, 220, 200, 60, BUTTON_COLOR, BUTTON_HOVER_COLOR, pos)
+        settings_hover, _ = draw_button("Настройки", 400, 300, 200, 60, BUTTON_COLOR, BUTTON_HOVER_COLOR, pos)
+        quit_hover, _ = draw_button("Выход", 400, 380, 200, 60, (120, 40, 40), (180, 60, 60), pos)
 
         pygame.display.flip()
         for event in pygame.event.get():
@@ -352,17 +372,70 @@ def main_menu():
                     sys.exit()
 
 def settings_menu():
+    global settings  # чтобы сохранить обратно
+
+    volume = settings.get("volume", 0.9)
+    muted = settings.get("muted", False)
+
+    slider_x = 300
+    slider_y = 280
+    slider_width = 400
+    slider_height = 10
+    handle_radius = 12
+    dragging = False
+
     while True:
         screen.fill(BG_COLOR)
-        draw_text("⚙ Настройки (заглушка)", 320, 250, TEXT_COLOR)
-        draw_text("Нажмите любую клавишу или клик для возврата", 220, 320, TEXT_COLOR)
+        draw_text("⚙ Настройки", 320, 180, TEXT_COLOR)
+
+        pos = pygame.mouse.get_pos()
+
+        # Полоса громкости
+        draw_text(f"Громкость: {int(volume * 100)}%", slider_x, slider_y - 40, TEXT_COLOR)
+        pygame.draw.rect(screen, (100, 100, 100), (slider_x, slider_y, slider_width, slider_height), border_radius=5)
+        handle_x = slider_x + int(volume * slider_width)
+        pygame.draw.circle(screen, BUTTON_HOVER_COLOR if dragging else BUTTON_COLOR, (handle_x, slider_y + slider_height // 2), handle_radius)
+
+        # Кнопка выключения звука
+        mute_text = "🔈 Вкл" if muted else "🔊 Выкл"
+        mute_hover, mute_rect = draw_button(mute_text, 350, 350, 200, 50, BUTTON_COLOR, BUTTON_HOVER_COLOR, pos)
+
+        # Кнопка "Назад"
+        back_hover, back_rect = draw_button("Назад", 350, 420, 200, 50, BUTTON_COLOR, BUTTON_HOVER_COLOR, pos)
+
         pygame.display.flip()
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                save_settings(settings)
                 pygame.quit()
                 sys.exit()
-            elif event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:
-                return
+
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                mx, my = event.pos
+                if abs(mx - handle_x) <= handle_radius and abs(my - (slider_y + slider_height // 2)) <= handle_radius:
+                    dragging = True
+                elif mute_hover:
+                    muted = not muted
+                    pygame.mixer.music.set_volume(0 if muted else volume)
+                    settings['muted'] = muted
+                    save_settings(settings)
+                elif back_hover:
+                    settings['volume'] = volume
+                    settings['muted'] = muted
+                    save_settings(settings)
+                    return
+
+            elif event.type == pygame.MOUSEBUTTONUP:
+                dragging = False
+
+            elif event.type == pygame.MOUSEMOTION and dragging:
+                mx, _ = event.pos
+                mx = max(slider_x, min(slider_x + slider_width, mx))
+                volume = (mx - slider_x) / slider_width
+                if not muted:
+                    pygame.mixer.music.set_volume(volume)
+
 
 def difficulty_menu():
     while True:
@@ -412,12 +485,12 @@ while True:
             invalid_move_message = ""
 
         if delivered_caravans(player['caravans']) >= 2:
-            draw_text("🎉 Победа игрока!", 400, 550, RED)
+            draw_text("Победа игрока!", 400, 550, RED)
             pygame.display.flip()
             pygame.time.wait(2000)
             break
         if delivered_caravans(bot['caravans']) >= 2:
-            draw_text("🤖 Победа бота!", 400, 550, RED)
+            draw_text("Победа бота!", 400, 550, RED)
             pygame.display.flip()
             pygame.time.wait(2000)
             break

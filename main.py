@@ -29,10 +29,11 @@ pygame.display.set_caption("Караван (Fallout)")
 # Загрузка музыки (нужно иметь файл music/music.mp3)
 try:
     pygame.mixer.music.load("music/music.mp3")
-    pygame.mixer.music.set_volume(0.3)
+    pygame.mixer.music.set_volume(0.9)
     pygame.mixer.music.play(-1)
 except Exception as e:
     print("Не удалось загрузить музыку. Убедитесь, что файл music/music.mp3 в папке с игрой.")
+
 
 def draw_text(text, x, y, color=TEXT_COLOR, font=FONT):
     img = font.render(text, True, color)
@@ -72,6 +73,22 @@ def get_caravan_at(x, y, top):
         if cx <= x <= cx + 180:
             return i
     return -1
+
+def get_caravan_side_and_index(x, y):
+    # Проверяем, клик по караванам бота
+    bot_top = 50
+    player_top = 260
+    if bot_top <= y <= bot_top + CARD_HEIGHT:
+        for i in range(3):
+            cx = 150 + i * 250
+            if cx <= x <= cx + 180:
+                return ('bot', i)
+    elif player_top <= y <= player_top + CARD_HEIGHT:
+        for i in range(3):
+            cx = 150 + i * 250
+            if cx <= x <= cx + 180:
+                return ('player', i)
+    return (None, -1)
 
 def create_deck():
     numeric = [str(i) for i in range(2, 11)]
@@ -119,6 +136,7 @@ def play_card(hand, caravans, hand_idx, caravan_idx):
     if target['locked']:
         return False
 
+    # Обычные карты кладём только в свой караван
     if card not in ['J', 'Q', 'K']:
         if is_valid_move(target, card):
             target['cards'].append(card)
@@ -126,7 +144,7 @@ def play_card(hand, caravans, hand_idx, caravan_idx):
             return True
         return False
 
-    # Специальные карты, действуем по эффектам:
+    # Спецкарты — могут применяться и к чужим караванам
     if card == 'J':
         if target['cards']:
             target['cards'].pop()
@@ -141,11 +159,11 @@ def play_card(hand, caravans, hand_idx, caravan_idx):
         if target['cards']:
             last = target['cards'][-1]
             if last.isdigit():
-                # Удваиваем значение последней карты, не заменяя её полностью (просто изменяем значение)
                 target['cards'][-1] = str(int(last) * 2)
             del hand[hand_idx]
             return True
     return False
+
 
 def caravan_score(caravan):
     return sum(card_value(c) for c in caravan['cards'])
@@ -314,12 +332,12 @@ def draw_game(player, bot, deck):
 def main_menu():
     while True:
         screen.fill(BG_COLOR)
-        draw_text("КАРАВАН", 380, 100, TEXT_COLOR, font=TITLE_FONT)
+        draw_text("Кортеж", 380, 100, TEXT_COLOR, font=TITLE_FONT)
 
         pos = pygame.mouse.get_pos()
-        play_hover, _ = draw_button("▶ Играть", 400, 220, 200, 60, BUTTON_COLOR, BUTTON_HOVER_COLOR, pos)
-        settings_hover, _ = draw_button("⚙ Настройки", 400, 300, 200, 60, BUTTON_COLOR, BUTTON_HOVER_COLOR, pos)
-        quit_hover, _ = draw_button("❌ Выход", 400, 380, 200, 60, (120, 40, 40), (180, 60, 60), pos)
+        play_hover, _ = draw_button("Играть", 400, 220, 200, 60, BUTTON_COLOR, BUTTON_HOVER_COLOR, pos)
+        settings_hover, _ = draw_button("Настройки", 400, 300, 200, 60, BUTTON_COLOR, BUTTON_HOVER_COLOR, pos)
+        quit_hover, _ = draw_button("Выход", 400, 380, 200, 60, (120, 40, 40), (180, 60, 60), pos)
 
         pygame.display.flip()
         for event in pygame.event.get():
@@ -417,24 +435,47 @@ while True:
                     running = False
                     break
                 # Левый клик — выбор карты или попытка положить карту
-                if event.button == 1:
+                if event.button == 1:  # Левый клик
                     idx = get_card_at(x, y, 500)
                     if idx != -1 and idx < len(player['hand']):
-                        # При клике по карте — выбираем её (или снимаем выбор)
+                        # Выбираем или снимаем выбор карты
                         if selected_card == idx:
                             selected_card = -1
                         else:
                             selected_card = idx
                     else:
-                        cav = get_caravan_at(x, y, 260)
-                        if cav != -1 and selected_card != -1:
-                            if play_card(player['hand'], player['caravans'], selected_card, cav):
-                                draw_cards(player['hand'], deck)
-                                bot_turn(bot, deck, player, difficulty=bot_difficulty)
-
+                        side, cav_idx = get_caravan_side_and_index(x, y)
+                        if cav_idx != -1 and selected_card != -1:
+                            card = player['hand'][selected_card]
+                            if card in ['J', 'Q', 'K']:
+                                # Разрешаем играть спецкарты на чужой или свой караван
+                                if side == 'bot':
+                                    # Применяем спецкарту на караван бота
+                                    if play_card(player['hand'], bot['caravans'], selected_card, cav_idx):
+                                        draw_cards(player['hand'], deck)
+                                        bot_turn(bot, deck, player, difficulty=bot_difficulty)
+                                    else:
+                                        invalid_move_message = "Недопустимый ход!"
+                                elif side == 'player':
+                                    # Применяем спецкарту на свой караван
+                                    if play_card(player['hand'], player['caravans'], selected_card, cav_idx):
+                                        draw_cards(player['hand'], deck)
+                                        bot_turn(bot, deck, player, difficulty=bot_difficulty)
+                                    else:
+                                        invalid_move_message = "Недопустимый ход!"
                             else:
-                                invalid_move_message = "Недопустимый ход!"
+                                # Обычная карта — только на свой караван
+                                if side == 'player':
+                                    if play_card(player['hand'], player['caravans'], selected_card, cav_idx):
+                                        draw_cards(player['hand'], deck)
+                                        bot_turn(bot, deck, player, difficulty=bot_difficulty)
+                                    else:
+                                        invalid_move_message = "Недопустимый ход!"
+                                else:
+                                    invalid_move_message = "Нельзя класть обычные карты на караван противника"
                             selected_card = -1
+
+
                 # Правый клик — попытка завершить караван
                 elif event.button == 3:
                     cav = get_caravan_at(x, y, 260)

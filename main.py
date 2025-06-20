@@ -28,7 +28,7 @@ pygame.display.set_caption("Караван (Fallout)")
 
 # Загрузка музыки (нужно иметь файл fallout_theme.mp3 в папке с игрой)
 try:
-    pygame.mixer.music.load("fallout_theme.mp3")
+    pygame.mixer.music.load("music/music.mp3")
     pygame.mixer.music.set_volume(0.3)
     pygame.mixer.music.play(-1)
 except Exception as e:
@@ -278,14 +278,18 @@ while True:
                 if menu_icon.collidepoint(x, y):
                     running = False
                     break
-                if selected_card == -1:
-                    idx = get_card_at(x, y, 430)
-                    if 0 <= idx < len(player['hand']):
+                idx = get_card_at(x, y, 430)
+                if idx != -1 and idx < len(player['hand']):
+                    # Клик по карте — выбираем её, если уже выбрана — снимаем выбор
+                    if selected_card == idx:
+                        selected_card = -1
+                    else:
                         selected_card = idx
                 else:
                     cav = get_caravan_at(x, y, 230)
-                    if cav != -1:
+                    if cav != -1 and selected_card != -1:
                         if play_card(player['hand'], player['caravans'], selected_card, cav):
                             draw_cards(player['hand'], deck)
                             bot_turn(bot, deck)
                         selected_card = -1
+

@@ -292,4 +292,3 @@ while True:
                             draw_cards(player['hand'], deck)
                             bot_turn(bot, deck)
                         selected_card = -1
-

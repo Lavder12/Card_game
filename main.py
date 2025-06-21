@@ -293,6 +293,70 @@ def bot_turn(bot, deck, player=None, difficulty='easy'):
         # нет хороших ходов — сброс
         if hand:
             hand.pop()
+    elif difficulty == 'impossible':
+        best_score = -float('inf')
+        best_move = None
+        # Пробуем все комбинации: карта + караван + цель
+        for i, card in enumerate(hand):
+            for j in range(3):
+                target = caravans[j]
+                if target['locked']:
+                    continue
+
+                if card not in ['J', 'Q', 'K']:
+                    # пробуем обычную карту
+                    if is_valid_move(target, card):
+                        test = list(target['cards']) + [card]
+                        score = caravan_score({'cards': test})
+                        if 21 <= score <= 26:
+                            score += 1000  # приоритет идеальной зоны
+                        elif score > 26:
+                            score -= 100
+                        else:
+                            score += score
+                        if score > best_score:
+                            best_score = score
+                            best_move = ('play', i, j)
+
+                elif card == 'J':
+                    # попробуем удалить карту игрока
+                    for k in range(3):
+                        player_cav = player['caravans'][k]
+                        if player_cav['cards']:
+                            last = player_cav['cards'][-1]
+                            if card_value(last) >= 5:
+                                best_move = ('remove', i, k)
+                                best_score = 999  # высокий приоритет
+
+                elif card == 'K':
+                    if target['cards']:
+                        last = target['cards'][-1]
+                        if last.isdigit():
+                            doubled = int(last) * 2
+                            test = list(target['cards'])
+                            test[-1] = str(doubled)
+                            score = caravan_score({'cards': test})
+                            if 21 <= score <= 26:
+                                best_move = ('double', i, j)
+                                best_score = 1000
+
+                elif card == 'Q':
+                    if len(target['cards']) >= 2:
+                        best_move = ('swap', i, j)
+                        best_score = 10  # небольшое преимущество
+
+        # Выполняем лучший ход
+        if best_move:
+            move_type, i, j = best_move
+            if move_type in ['play', 'double', 'swap']:
+                play_card(hand, caravans, i, j)
+            elif move_type == 'remove':
+                play_card(hand, player['caravans'], i, j)
+            return
+
+        # Если нет удачного хода, сбросить карту
+        if hand:
+            hand.pop()
 
 
 def draw_game(player, bot, deck):
@@ -446,6 +510,7 @@ def difficulty_menu():
         easy_hover, _ = draw_button("Лёгкий", 350, 220, 200, 60, BUTTON_COLOR, BUTTON_HOVER_COLOR, pos)
         med_hover, _ = draw_button("Средний", 350, 300, 200, 60, BUTTON_COLOR, BUTTON_HOVER_COLOR, pos)
         hard_hover, _ = draw_button("Сложный", 350, 380, 200, 60, BUTTON_COLOR, BUTTON_HOVER_COLOR, pos)
+        impossible_hover, _ = draw_button("Невозможно", 350, 460, 200, 60, RED, (255, 80, 80), pos)
 
         pygame.display.flip()
         for event in pygame.event.get():
@@ -456,6 +521,8 @@ def difficulty_menu():
                 if easy_hover: return 'easy'
                 if med_hover: return 'medium'
                 if hard_hover: return 'hard'
+                if impossible_hover: return 'impossible'
+
 
 # === Главный цикл игры ===
 while True:
@@ -524,6 +591,7 @@ while True:
                                 if side == 'bot':
                                     # Применяем спецкарту на караван бота
                                     if play_card(player['hand'], bot['caravans'], selected_card, cav_idx):
+                                        selected_card = -1
                                         draw_cards(player['hand'], deck)
                                         bot_turn(bot, deck, player, difficulty=bot_difficulty)
                                     else:
@@ -531,6 +599,7 @@ while True:
                                 elif side == 'player':
                                     # Применяем спецкарту на свой караван
                                     if play_card(player['hand'], player['caravans'], selected_card, cav_idx):
+                                        selected_card = -1
                                         draw_cards(player['hand'], deck)
                                         bot_turn(bot, deck, player, difficulty=bot_difficulty)
                                     else:
@@ -539,6 +608,7 @@ while True:
                                 # Обычная карта — только на свой караван
                                 if side == 'player':
                                     if play_card(player['hand'], player['caravans'], selected_card, cav_idx):
+                                        selected_card = -1
                                         draw_cards(player['hand'], deck)
                                         bot_turn(bot, deck, player, difficulty=bot_difficulty)
                                     else:

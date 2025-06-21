@@ -46,7 +46,8 @@ pygame.display.set_caption("Караван (Fallout)")
 # Загрузка музыки (нужно иметь файл music/music.mp3)
 try:
     pygame.mixer.music.load("music/music.mp3")
-    pygame.mixer.music.set_volume(0.9)
+    volume = 0 if settings.get("muted", False) else settings.get("volume", 0.9)
+    pygame.mixer.music.set_volume(volume)
     pygame.mixer.music.play(-1)
 except Exception as e:
     print("Не удалось загрузить музыку. Убедитесь, что файл music/music.mp3 в папке с игрой.")
@@ -384,7 +385,7 @@ def settings_menu():
 
     while True:
         screen.fill(BG_COLOR)
-        draw_text("⚙ Настройки", 320, 180, TEXT_COLOR)
+        draw_text("Настройки", 320, 180, TEXT_COLOR)
 
         pos = pygame.mouse.get_pos()
 
@@ -395,7 +396,7 @@ def settings_menu():
         pygame.draw.circle(screen, BUTTON_HOVER_COLOR if dragging else BUTTON_COLOR, (handle_x, slider_y + slider_height // 2), handle_radius)
 
         # Кнопка выключения звука
-        mute_text = "🔈 Вкл" if muted else "🔊 Выкл"
+        mute_text = "Вкл" if muted else "Выкл"
         mute_hover, mute_rect = draw_button(mute_text, 350, 350, 200, 50, BUTTON_COLOR, BUTTON_HOVER_COLOR, pos)
 
         # Кнопка "Назад"
@@ -484,12 +485,12 @@ while True:
             invalid_move_message = ""
 
         if delivered_caravans(player['caravans']) >= 2:
-            draw_text("🎉 Победа игрока!", 400, 550, RED)
+            draw_text("Победа игрока!", 400, 550, RED)
             pygame.display.flip()
             pygame.time.wait(2000)
             break
         if delivered_caravans(bot['caravans']) >= 2:
-            draw_text("🤖 Победа бота!", 400, 550, RED)
+            draw_text("Победа бота!", 400, 550, RED)
             pygame.display.flip()
             pygame.time.wait(2000)
             break
@@ -554,5 +555,3 @@ while True:
                         caravan = player['caravans'][cav]
                         if caravan['cards'] and not caravan['locked']:
                             caravan['locked'] = True
-
-    # После раунда игра возвращается в главное меню

@@ -524,6 +524,7 @@ while True:
                                 if side == 'bot':
                                     # Применяем спецкарту на караван бота
                                     if play_card(player['hand'], bot['caravans'], selected_card, cav_idx):
+                                        selected_card = -1
                                         draw_cards(player['hand'], deck)
                                         bot_turn(bot, deck, player, difficulty=bot_difficulty)
                                     else:
@@ -531,6 +532,7 @@ while True:
                                 elif side == 'player':
                                     # Применяем спецкарту на свой караван
                                     if play_card(player['hand'], player['caravans'], selected_card, cav_idx):
+                                        selected_card = -1
                                         draw_cards(player['hand'], deck)
                                         bot_turn(bot, deck, player, difficulty=bot_difficulty)
                                     else:
@@ -539,6 +541,7 @@ while True:
                                 # Обычная карта — только на свой караван
                                 if side == 'player':
                                     if play_card(player['hand'], player['caravans'], selected_card, cav_idx):
+                                        selected_card = -1
                                         draw_cards(player['hand'], deck)
                                         bot_turn(bot, deck, player, difficulty=bot_difficulty)
                                     else:

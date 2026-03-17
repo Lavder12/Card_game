@@ -1,0 +1,82 @@
+[
+  {
+    "date": "17.03 18:26",
+    "result": "loss",
+    "difficulty": "easy",
+    "mode": "tournament",
+    "duration_s": 89,
+    "caps_delta": 0
+  },
+  {
+    "date": "17.03 18:35",
+    "result": "loss",
+    "difficulty": "easy",
+    "mode": "tournament",
+    "duration_s": 1,
+    "caps_delta": 0
+  },
+  {
+    "date": "17.03 19:08",
+    "result": "loss",
+    "difficulty": "easy",
+    "mode": "normal",
+    "duration_s": 75,
+    "caps_delta": -50
+  },
+  {
+    "date": "17.03 19:08",
+    "result": "loss",
+    "difficulty": "easy",
+    "mode": "tournament",
+    "duration_s": 0,
+    "caps_delta": 0
+  },
+  {
+    "date": "17.03 19:14",
+    "result": "loss",
+    "difficulty": "easy",
+    "mode": "normal",
+    "duration_s": 5,
+    "caps_delta": 0
+  },
+  {
+    "date": "17.03 19:14",
+    "result": "loss",
+    "difficulty": "easy",
+    "mode": "normal",
+    "duration_s": 0,
+    "caps_delta": 0
+  },
+  {
+    "date": "17.03 19:14",
+    "result": "loss",
+    "difficulty": "easy",
+    "mode": "normal",
+    "duration_s": 0,
+    "caps_delta": 0
+  },
+  {
+    "date": "17.03 19:31",
+    "result": "loss",
+    "difficulty": "medium",
+    "mode": "hot_seat",
+    "duration_s": 60,
+    "caps_delta": 0
+  },
+  {
+    "date": "17.03 19:39",
+    "result": "loss",
+    "difficulty": "easy",
+    "mode": "normal",
+    "duration_s": 33,
+    "caps_delta": 0
+  },
+  {
+    "date": "17.03 19:39",
+    "result": "loss",
+    "difficulty": "medium",
+    "mode": "timed",
+    "duration_s": 1,
+    "caps_delta": 0
+  }
+]

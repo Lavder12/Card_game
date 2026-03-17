@@ -1,4 +1,12 @@
 {
-  "volume": 0.08181818181818182,
-  "muted": false
+  "volume": 0.09541984732824428,
+  "sfx_volume": 0.6717557251908397,
+  "muted": false,
+  "bot_uses_player_deck": false,
+  "language": "ru",
+  "resolution": "1920x1080",
+  "fullscreen": true,
+  "card_back": 0,
+  "caps": 450,
+  "player_name": "Player"
 }

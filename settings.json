@@ -3,9 +3,9 @@
   "sfx_volume": 0.6717557251908397,
   "muted": false,
   "bot_uses_player_deck": false,
-  "language": "en",
-  "resolution": "1280x720",
-  "fullscreen": false,
+  "language": "ru",
+  "resolution": "1600x900",
+  "fullscreen": true,
   "card_back": 0,
   "caps": 450,
   "player_name": "Player"

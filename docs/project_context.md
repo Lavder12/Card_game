@@ -115,3 +115,10 @@ The codebase is modularized under the `src/` directory.
 * **Aesthetic Shift**: The game's UI is actively being modernized from a basic "green terminal" aesthetic (using `draw_panel`) to a richer "worn wood, leather, and parchment" style.
 * **Global Helpers**: Shared UI rendering functions like `draw_wooden_board(rect)` and `draw_parchment(rect)` have been extracted to the global scope in `src/screens.py`. This ensures consistency across different menus (like the Profile and Background Selection screens).
 * **Pending Overhauls**: The old `deck_builder_menu` has been completely removed from the game pending a total visual and functional redesign to match the new standards.
+
+## 14. Git & GitHub Integration & Online Server Status (July 2026)
+* **GitHub Repository**: The project is cleanly linked to `https://github.com/Lavder12/Card_game.git` on branch `main` under author `Lavder12`.
+* **Clean Working Directory**: Added a comprehensive `.gitignore` excluding build folders (`Build_Release/`, `build/`, `dist/`), Python bytecode (`__pycache__/`), and runtime logs (`logs/`).
+* **Resolved Desktop `.git` Conflict**: Removed an accidentally initialized `.git` repository on the Windows Desktop `C:\Users\Home0\Desktop\.git` that previously caused IDE Source Control to track 1024 unrelated desktop shortcuts and files.
+* **Firebase Realtime Database Status (`FIREBASE_URL`)**: Verified online status and connectivity for `https://dustway-default-rtdb.europe-west1.firebasedatabase.app`. Realtime Database read/write rules have been updated and confirmed working (`.read: true, .write: true`), successfully returning live data (`global_caps` fund and registered user profiles).
+

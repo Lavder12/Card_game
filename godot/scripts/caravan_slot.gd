@@ -10,15 +10,16 @@ signal card_dropped_on_slot(slot: CaravanSlot, card_ui: CardUI)
 
 var caravan_model: Models.CaravanColumn
 
-@onready var header_label: Label = $HeaderLabel
-@onready var status_badge: PanelContainer = $StatusBadge
-@onready var status_label: Label = $StatusBadge/Label
-@onready var cards_container: VBoxContainer = $CardsContainer
+# Node paths MUST match the actual scene tree in caravan_slot.tscn
+@onready var header_label: Label = $VBoxContainer/HeaderLabel
+@onready var status_badge: PanelContainer = $VBoxContainer/StatusBadge
+@onready var status_label: Label = $VBoxContainer/StatusBadge/Label
+@onready var cards_container: VBoxContainer = $VBoxContainer/ScrollContainer/CardsContainer
 @onready var hover_highlight: ColorRect = $HoverHighlight
 @onready var click_button: Button = $ClickButton
 
 func _ready() -> void:
-	custom_minimum_size = Vector2(160, 320)
+	custom_minimum_size = Vector2(160, 280)
 	if click_button:
 		click_button.pressed.connect(_on_click_button_pressed)
 	if hover_highlight:
@@ -27,57 +28,53 @@ func _ready() -> void:
 
 func set_column_model(model: Models.CaravanColumn) -> void:
 	caravan_model = model
-	_update_ui()
+	if is_inside_tree():
+		_update_ui()
 
 func _update_ui() -> void:
-	if not is_inside_tree() or caravan_model == null: return
+	if not is_inside_tree(): return
 	
-	var total = caravan_model.get_total_value()
-	var stat = caravan_model.get_status()
-	var dir = caravan_model.get_direction()
-	
-	var dir_str = ""
-	if dir == 1: dir_str = "▲ Возр."
-	elif dir == -1: dir_str = "▼ Убыв."
-	
+	# Update header
 	if header_label:
-		header_label.text = "Караван %d\n%s" % [column_index + 1, dir_str]
+		var dir_str = ""
+		if caravan_model and caravan_model.get_direction() == 1: dir_str = " ▲"
+		elif caravan_model and caravan_model.get_direction() == -1: dir_str = " ▼"
+		header_label.text = "Караван %d%s" % [column_index + 1, dir_str]
 	
-	if status_label and status_badge:
+	# Update status badge
+	if status_label and caravan_model:
+		var total = caravan_model.get_total_value()
+		var stat = caravan_model.get_status()
+		
 		if stat == "SOLD":
-			status_label.text = "Сумма: %d\nПРОДАН!" % total
-			status_badge.modulate = Color(0.2, 1.0, 0.3) # Glowing green
+			status_label.text = "Счёт: %d ★" % total
+			if status_badge: status_badge.modulate = Color(0.47, 0.75, 0.39) # Green
 		elif stat == "OVER":
-			status_label.text = "Сумма: %d\nПЕРЕБОР" % total
-			status_badge.modulate = Color(1.0, 0.3, 0.3) # Red alert
+			status_label.text = "Счёт: %d ✕" % total
+			if status_badge: status_badge.modulate = Color(0.78, 0.27, 0.27) # Red
 		else:
-			status_label.text = "Сумма: %d" % total
-			status_badge.modulate = Color(1.0, 0.85, 0.4) # Yellow/gold
+			status_label.text = "Счёт: %d" % total
+			if status_badge: status_badge.modulate = Color(0.95, 0.75, 0.34) # Gold
+	elif status_label:
+		status_label.text = "Счёт: 0"
 	
 	# Rebuild displayed cards
-	if cards_container:
+	if cards_container and caravan_model:
 		for child in cards_container.get_children():
 			child.queue_free()
 		
+		var card_scene = preload("res://scenes/card.tscn")
 		for card_model in caravan_model.cards:
-			var card_ui = preload("res://scenes/card.tscn").instantiate() as CardUI
+			var card_ui = card_scene.instantiate() as CardUI
 			cards_container.add_child(card_ui)
 			card_ui.is_draggable = false
+			card_ui.custom_minimum_size = Vector2(80, 115)
 			card_ui.set_card_model(card_model, false)
-			
-			# Also show attached face cards slightly indented right next to / under the card
-			for att_model in card_model.attached_cards:
-				var att_ui = preload("res://scenes/card.tscn").instantiate() as CardUI
-				cards_container.add_child(att_ui)
-				att_ui.is_draggable = false
-				att_ui.set_card_model(att_model, false)
-				att_ui.modulate = Color(0.85, 0.95, 1.0)
-				att_ui.custom_minimum_size = Vector2(90, 130)
 
 func _on_click_button_pressed() -> void:
 	column_clicked.emit(self)
 
-# Drag & Drop handling for dropping cards right onto this column slot
+# Drag & Drop handling
 func _can_drop_data(at_position: Vector2, data: Variant) -> bool:
 	if typeof(data) != TYPE_DICTIONARY or not data.has("type") or data["type"] != "CARD":
 		return false
@@ -85,16 +82,12 @@ func _can_drop_data(at_position: Vector2, data: Variant) -> bool:
 	if caravan_model == null or dragged_card == null:
 		return false
 	
-	# Check rules: can we place this card?
 	if owner_type == "PLAYER":
-		# Player placing on their own column
 		if not dragged_card.is_face:
 			return caravan_model.can_place_card(dragged_card)
 		else:
-			# Face cards on own column
 			return caravan_model.can_place_card(dragged_card, caravan_model.cards.size() - 1)
 	else:
-		# Player placing offensive face card (J, K) on opponent's column!
 		if dragged_card.is_face and (dragged_card.value in ["J", "K"]):
 			return caravan_model.can_place_card(dragged_card, caravan_model.cards.size() - 1)
 		return false

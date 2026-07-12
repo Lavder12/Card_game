@@ -1,0 +1,141 @@
+[gd_scene load_steps=5 format=3 uid="uid://c5m8y3x2k7n4v"]
+
+[ext_resource type="Script" path="res://scripts/game_table.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/background/game_table.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/avatars/scavenger.png" id="3"]
+[ext_resource type="Texture2D" path="res://assets/cards/back-red 1.png" id="4"]
+
+[node name="GameTable" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Header" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="BackButton" type="Button" parent="MarginContainer/VBoxContainer/Header"]
+custom_minimum_size = Vector2(160, 45)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "◀ В МЕНЮ"
+
+[node name="StatusLabel" type="Label" parent="MarginContainer/VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 26
+text = "Противник: Мусорщик (Ставка: 25 крышек)"
+horizontal_alignment = 1
+
+[node name="TableArea" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 40
+alignment = 1
+
+[node name="OpponentBox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/TableArea"]
+layout_mode = 2
+theme_override_constants/separation = 80
+alignment = 1
+
+[node name="AvatarBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TableArea/OpponentBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/TableArea/OpponentBox/AvatarBox"]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+texture = ExtResource("3")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/TableArea/OpponentBox/AvatarBox"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
+theme_override_font_sizes/font_size = 20
+text = "Мусорщик"
+horizontal_alignment = 1
+
+[node name="CaravanOpp1" type="TextureRect" parent="MarginContainer/VBoxContainer/TableArea/OpponentBox"]
+custom_minimum_size = Vector2(140, 200)
+layout_mode = 2
+texture = ExtResource("4")
+expand_mode = 1
+
+[node name="CaravanOpp2" type="TextureRect" parent="MarginContainer/VBoxContainer/TableArea/OpponentBox"]
+custom_minimum_size = Vector2(140, 200)
+layout_mode = 2
+texture = ExtResource("4")
+expand_mode = 1
+
+[node name="CaravanOpp3" type="TextureRect" parent="MarginContainer/VBoxContainer/TableArea/OpponentBox"]
+custom_minimum_size = Vector2(140, 200)
+layout_mode = 2
+texture = ExtResource("4")
+expand_mode = 1
+
+[node name="PlayerBox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/TableArea"]
+layout_mode = 2
+theme_override_constants/separation = 80
+alignment = 1
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/TableArea/PlayerBox"]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+
+[node name="CaravanPl1" type="ColorRect" parent="MarginContainer/VBoxContainer/TableArea/PlayerBox"]
+custom_minimum_size = Vector2(140, 200)
+layout_mode = 2
+color = Color(0.2, 0.15, 0.1, 0.6)
+
+[node name="CaravanPl2" type="ColorRect" parent="MarginContainer/VBoxContainer/TableArea/PlayerBox"]
+custom_minimum_size = Vector2(140, 200)
+layout_mode = 2
+color = Color(0.2, 0.15, 0.1, 0.6)
+
+[node name="CaravanPl3" type="ColorRect" parent="MarginContainer/VBoxContainer/TableArea/PlayerBox"]
+custom_minimum_size = Vector2(140, 200)
+layout_mode = 2
+color = Color(0.2, 0.15, 0.1, 0.6)
+
+[node name="HandArea" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 180)
+layout_mode = 2
+
+[node name="HandBox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HandArea"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1

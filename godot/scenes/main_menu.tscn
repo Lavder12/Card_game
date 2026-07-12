@@ -1,7 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://b8y6q2x7v3m9w"]
+[gd_scene load_steps=7 format=3 uid="uid://b8y6q2x7v3m9w"]
 
-[ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_menu_gd"]
-[ext_resource type="Texture2D" path="res://assets/background/main_menu.png" id="2_bg_tex"]
+[ext_resource type="Script" path="res://scripts/main_menu.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/background/main_menu.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/menu_tiles/campaign.png" id="3"]
+[ext_resource type="Texture2D" path="res://assets/menu_tiles/bot.png" id="4"]
+[ext_resource type="Texture2D" path="res://assets/menu_tiles/network.png" id="5"]
+[ext_resource type="Texture2D" path="res://assets/menu_tiles/tutorial.png" id="6"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -10,7 +14,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_menu_gd")
+script = ExtResource("1")
 
 [node name="Background" type="TextureRect" parent="."]
 layout_mode = 1
@@ -19,7 +23,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_bg_tex")
+texture = ExtResource("2")
 expand_mode = 1
 stretch_mode = 6
 
@@ -31,7 +35,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 64
-theme_override_constants/margin_top = 64
+theme_override_constants/margin_top = 40
 theme_override_constants/margin_right = 64
 theme_override_constants/margin_bottom = 64
 
@@ -45,16 +49,155 @@ layout_mode = 2
 [node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer/Header"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 48
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_font_sizes/font_size = 52
 text = "DUSTWAY: DESERT TRADER"
 
 [node name="CapsLabel" type="Label" parent="MarginContainer/VBoxContainer/Header"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 28
-text = "Фонд Пустоши: Загрузка..."
+theme_override_colors/font_color = Color(1, 0.843, 0.35, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 32
+text = "Фонд Пустоши: ..."
 
 [node name="TilesBox" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_constants/separation = 40
+alignment = 1
+
+[node name="TileCampaign" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TilesBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="BtnCampaign" type="TextureButton" parent="MarginContainer/VBoxContainer/TilesBox/TileCampaign"]
+custom_minimum_size = Vector2(300, 480)
+layout_mode = 2
+texture_normal = ExtResource("3")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/TilesBox/TileCampaign"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.9, 0.8, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 28
+text = "КАМПАНИЯ"
+horizontal_alignment = 1
+
+[node name="TileBot" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TilesBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="BtnBot" type="TextureButton" parent="MarginContainer/VBoxContainer/TilesBox/TileBot"]
+custom_minimum_size = Vector2(300, 480)
+layout_mode = 2
+texture_normal = ExtResource("4")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/TilesBox/TileBot"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.9, 0.8, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 28
+text = "ОДИНОЧНАЯ ИГРА"
+horizontal_alignment = 1
+
+[node name="TileNetwork" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TilesBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="BtnNetwork" type="TextureButton" parent="MarginContainer/VBoxContainer/TilesBox/TileNetwork"]
+custom_minimum_size = Vector2(300, 480)
+layout_mode = 2
+texture_normal = ExtResource("5")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/TilesBox/TileNetwork"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.9, 0.8, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 28
+text = "СЕТЕВАЯ ИГРА"
+horizontal_alignment = 1
+
+[node name="TileTutorial" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TilesBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="BtnTutorial" type="TextureButton" parent="MarginContainer/VBoxContainer/TilesBox/TileTutorial"]
+custom_minimum_size = Vector2(300, 480)
+layout_mode = 2
+texture_normal = ExtResource("6")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/TilesBox/TileTutorial"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.9, 0.8, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 28
+text = "ПРАВИЛА"
+horizontal_alignment = 1
+
+[node name="PopupOverlay" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.75)
+
+[node name="PanelContainer" type="PanelContainer" parent="PopupOverlay"]
+custom_minimum_size = Vector2(600, 320)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -160.0
+offset_right = 300.0
+offset_bottom = 160.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PopupOverlay/PanelContainer"]
+layout_mode = 2
 theme_override_constants/separation = 30
 alignment = 1
+
+[node name="MessageLabel" type="Label" parent="PopupOverlay/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Информация..."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="CloseButton" type="Button" parent="PopupOverlay/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 22
+text = "ЗАКРЫТЬ"

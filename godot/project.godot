@@ -25,6 +25,7 @@ config/icon="res://assets/cursor.png"
 Globals="*res://scripts/globals.gd"
 Models="*res://scripts/models.gd"
 Network="*res://scripts/network.gd"
+SoundManager="*res://scripts/sound_manager.gd"
 
 [display]
 

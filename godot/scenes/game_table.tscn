@@ -24,6 +24,15 @@ texture = ExtResource("2")
 expand_mode = 1
 stretch_mode = 6
 
+[node name="DarkOverlay" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.067, 0.055, 0.047, 0.45)
+
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -32,60 +41,67 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 30
-theme_override_constants/margin_top = 20
+theme_override_constants/margin_top = 14
 theme_override_constants/margin_right = 30
-theme_override_constants/margin_bottom = 20
+theme_override_constants/margin_bottom = 14
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 15
+theme_override_constants/separation = 10
 
 [node name="Header" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 16
 
 [node name="BackButton" type="Button" parent="MarginContainer/VBoxContainer/Header"]
-custom_minimum_size = Vector2(140, 40)
+custom_minimum_size = Vector2(130, 36)
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 16
 text = "◀ В МЕНЮ"
 
 [node name="StatusLabel" type="Label" parent="MarginContainer/VBoxContainer/Header"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.91, 0.863, 0.784, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9)
-theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_x = 1
 theme_override_constants/shadow_offset_y = 2
-theme_override_font_sizes/font_size = 22
-text = "Ваш ход! Выберите карту в руке или перетащите её на колонку."
+theme_override_font_sizes/font_size = 18
+text = "Ваш ход! Выберите карту или перетащите на колонку."
 horizontal_alignment = 1
 
 [node name="ControlsBox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Header"]
 layout_mode = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation = 10
 
 [node name="DiscardButton" type="Button" parent="MarginContainer/VBoxContainer/Header/ControlsBox"]
-custom_minimum_size = Vector2(160, 40)
+custom_minimum_size = Vector2(150, 36)
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.7, 0.7, 1)
-theme_override_font_sizes/font_size = 16
-text = "🗑 СБРОСИТЬ КАРТУ"
+theme_override_font_sizes/font_size = 14
+text = "🗑 СБРОСИТЬ"
 
 [node name="PassButton" type="Button" parent="MarginContainer/VBoxContainer/Header/ControlsBox"]
-custom_minimum_size = Vector2(150, 40)
+custom_minimum_size = Vector2(140, 36)
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 14
 text = "⏭ ПРОПУСТИТЬ"
 
 [node name="TableArea" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_constants/separation = 25
+theme_override_constants/separation = 10
 alignment = 1
+
+[node name="BotLabel" type="Label" parent="MarginContainer/VBoxContainer/TableArea"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.722, 0.643, 0.545, 1)
+theme_override_font_sizes/font_size = 16
+text = "Маршруты бота"
 
 [node name="OpponentBox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/TableArea"]
 layout_mode = 2
-theme_override_constants/separation = 50
+size_flags_vertical = 3
+theme_override_constants/separation = 12
 alignment = 1
 
 [node name="AvatarBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TableArea/OpponentBox"]
@@ -93,7 +109,7 @@ layout_mode = 2
 alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/TableArea/OpponentBox/AvatarBox"]
-custom_minimum_size = Vector2(100, 100)
+custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 texture = ExtResource("3")
 expand_mode = 1
@@ -101,27 +117,45 @@ stretch_mode = 5
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/TableArea/OpponentBox/AvatarBox"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.722, 0.643, 0.545, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 14
 text = "Противник"
 horizontal_alignment = 1
 
+[node name="Separator" type="HSeparator" parent="MarginContainer/VBoxContainer/TableArea"]
+layout_mode = 2
+theme_override_styles/separator = null
+
+[node name="PlayerLabel" type="Label" parent="MarginContainer/VBoxContainer/TableArea"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.722, 0.643, 0.545, 1)
+theme_override_font_sizes/font_size = 16
+text = "Ваши маршруты"
+
 [node name="PlayerBox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/TableArea"]
 layout_mode = 2
-theme_override_constants/separation = 50
+size_flags_vertical = 3
+theme_override_constants/separation = 12
 alignment = 1
 
 [node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/TableArea/PlayerBox"]
-custom_minimum_size = Vector2(100, 100)
+custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 
-[node name="HandArea" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 170)
+[node name="HandLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.722, 0.643, 0.545, 1)
+theme_override_font_sizes/font_size = 16
+text = "Ваша рука"
+
+[node name="HandArea" type="PanelContainer" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 140)
 layout_mode = 2
 
 [node name="HandBox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HandArea"]
 layout_mode = 2
-theme_override_constants/separation = 15
+theme_override_constants/separation = 10
 alignment = 1
 
 [node name="EndMatchModal" type="ColorRect" parent="."]
@@ -135,53 +169,54 @@ grow_vertical = 2
 color = Color(0, 0, 0, 0.85)
 
 [node name="Panel" type="PanelContainer" parent="EndMatchModal"]
-custom_minimum_size = Vector2(600, 360)
+custom_minimum_size = Vector2(550, 320)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -300.0
-offset_top = -180.0
-offset_right = 300.0
-offset_bottom = 180.0
+offset_left = -275.0
+offset_top = -160.0
+offset_right = 275.0
+offset_bottom = 160.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="EndMatchModal/Panel"]
 layout_mode = 2
-theme_override_constants/separation = 30
+theme_override_constants/separation = 24
 alignment = 1
 
 [node name="TitleLabel" type="Label" parent="EndMatchModal/Panel/VBoxContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.84, 0.2, 1)
+theme_override_colors/font_color = Color(0.949, 0.753, 0.341, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 36
+theme_override_font_sizes/font_size = 32
 text = "🏆 ПОБЕДА В КАРАВАНЕ!"
 horizontal_alignment = 1
 
 [node name="DescLabel" type="Label" parent="EndMatchModal/Panel/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 22
+theme_override_colors/font_color = Color(0.91, 0.863, 0.784, 1)
+theme_override_font_sizes/font_size = 20
 text = "Вы обыграли противника и получили награду!"
 horizontal_alignment = 1
 autowrap_mode = 3
 
 [node name="HBoxContainer" type="HBoxContainer" parent="EndMatchModal/Panel/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 40
+theme_override_constants/separation = 30
 alignment = 1
 
 [node name="ReplayButton" type="Button" parent="EndMatchModal/Panel/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(200, 50)
+custom_minimum_size = Vector2(190, 46)
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "🔄 СЫГРАТЬ ЕЩЁ"
+theme_override_font_sizes/font_size = 18
+text = "🔄 НОВЫЙ БОЙ"
 
 [node name="MenuButton" type="Button" parent="EndMatchModal/Panel/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(200, 50)
+custom_minimum_size = Vector2(190, 46)
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "◀ В ГЛАВНОЕ МЕНЮ"
+theme_override_font_sizes/font_size = 18
+text = "◀ ГЛАВНОЕ МЕНЮ"

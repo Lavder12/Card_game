@@ -22,6 +22,7 @@ config/icon="res://assets/cursor.png"
 
 [autoload]
 
+ThemeManager="*res://scripts/theme_manager.gd"
 Globals="*res://scripts/globals.gd"
 Models="*res://scripts/models.gd"
 Network="*res://scripts/network.gd"

@@ -2,12 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://u162m2hleali"
-valid=false
+uid="uid://dxk537gt70qh5"
+path="res://.godot/imported/shack.png-8f5954adfab6863418cb01cf9d40176e.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://assets/profile_backgrounds/shack.png"
+dest_files=["res://.godot/imported/shack.png-8f5954adfab6863418cb01cf9d40176e.ctex"]
 
 [params]
 

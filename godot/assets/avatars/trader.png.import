@@ -2,12 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d0yq26cytqpg6"
-valid=false
+uid="uid://dh4eg0knb10yj"
+path="res://.godot/imported/trader.png-42bcd8e2e26ac6fd0b9330edd64cdaf1.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://assets/avatars/trader.png"
+dest_files=["res://.godot/imported/trader.png-42bcd8e2e26ac6fd0b9330edd64cdaf1.ctex"]
 
 [params]
 

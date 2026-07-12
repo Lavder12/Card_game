@@ -2,12 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://fh7qk576qh8"
-valid=false
+uid="uid://cbx0krecxgcwk"
+path="res://.godot/imported/nomad.png-6f04448b7ad0aef9e4175eca70246dee.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://assets/avatars/nomad.png"
+dest_files=["res://.godot/imported/nomad.png-6f04448b7ad0aef9e4175eca70246dee.ctex"]
 
 [params]
 

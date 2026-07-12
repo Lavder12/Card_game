@@ -2,12 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://l18hftwdthnh"
-valid=false
+uid="uid://bofi0t8f6ri6s"
+path="res://.godot/imported/scavenger.png-48a23526a72927de910c8c1bd80dedfe.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://assets/avatars/scavenger.png"
+dest_files=["res://.godot/imported/scavenger.png-48a23526a72927de910c8c1bd80dedfe.ctex"]
 
 [params]
 

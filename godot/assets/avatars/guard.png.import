@@ -2,12 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://blbhbncqix7br"
-valid=false
+uid="uid://btwnx7uyyxsak"
+path="res://.godot/imported/guard.png-c978359353fa03a72f82e5956e2335a2.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://assets/avatars/guard.png"
+dest_files=["res://.godot/imported/guard.png-c978359353fa03a72f82e5956e2335a2.ctex"]
 
 [params]
 

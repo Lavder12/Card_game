@@ -2,12 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://iu4xx0rd0w7v"
-valid=false
+uid="uid://bp7kfncxtafng"
+path="res://.godot/imported/caravan.png-d37acab688af02331c5e28da9c4bf6e9.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://assets/profile_backgrounds/caravan.png"
+dest_files=["res://.godot/imported/caravan.png-d37acab688af02331c5e28da9c4bf6e9.ctex"]
 
 [params]
 

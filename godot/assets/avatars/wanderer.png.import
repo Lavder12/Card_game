@@ -2,12 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dvvcstymnxv0"
-valid=false
+uid="uid://cwvdpyt755pf8"
+path="res://.godot/imported/wanderer.png-b5252047e3c3e4f19353c70d796cb494.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://assets/avatars/wanderer.png"
+dest_files=["res://.godot/imported/wanderer.png-b5252047e3c3e4f19353c70d796cb494.ctex"]
 
 [params]
 

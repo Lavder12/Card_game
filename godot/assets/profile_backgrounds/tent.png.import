@@ -2,12 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c52yv8hxbmu43"
-valid=false
+uid="uid://dehk7xjm0hvxx"
+path="res://.godot/imported/tent.png-b446291d04941140d0646e2f145849e9.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://assets/profile_backgrounds/tent.png"
+dest_files=["res://.godot/imported/tent.png-b446291d04941140d0646e2f145849e9.ctex"]
 
 [params]
 

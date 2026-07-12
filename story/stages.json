@@ -1,0 +1,153 @@
+{
+  "campaign_id": "dusty_tract",
+  "title_ru": "Пыльный тракт",
+  "title": "Dusty Tract",
+  "stages": [
+    {
+      "id": "juk",
+      "name": "Жук",
+      "location": "Сухая Балка",
+      "diff": "easy",
+      "personality": "benny",
+      "reward_caps": 120,
+      "win_flag": "win_juk",
+      "on_win_flags": [
+        "win_juk"
+      ],
+      "lore": "A loud small-time reseller tests the new caravan hand. Win to open the market rumor.",
+      "lore_ru": "Жук принимает вас за лёгкую добычу и предлагает партию.\nПобеда открывает рынок, первый слух о медицинском караване\nи доступ к информатору Мире.",
+      "loss": "Juk laughs and keeps the rumor locked. Replay the stage.",
+      "loss_ru": "Жук забирает ставку и смеётся. Сюжет не двигается: нужен реванш."
+    },
+    {
+      "id": "mira",
+      "name": "Мира",
+      "location": "Сухая Балка — старая прачечная",
+      "diff": "medium",
+      "personality": "house",
+      "reward_caps": 180,
+      "win_flag": "win_mira",
+      "on_win_flags": [
+        "win_mira"
+      ],
+      "lore": "Mira sells truth only to people who can hold pressure at the table.",
+      "lore_ru": "Мира не верит обещаниям — только столу.\nВыиграйте партию, чтобы узнать: маршрут каравана\nбыл не сорван случайно, его продали.",
+      "loss": "Mira closes the conversation until you win a rematch.",
+      "loss_ru": "Мира закрывает разговор: вы видите карты, но пока не человека за ними."
+    },
+    {
+      "id": "torm",
+      "name": "Торм",
+      "location": "Ржавый Узел",
+      "diff": "medium",
+      "personality": "yes_man",
+      "reward_caps": 220,
+      "win_flag": "win_torm",
+      "on_win_flags": [
+        "win_torm"
+      ],
+      "lore": "A straight, honest mechanic checks whether your routes can carry weight.",
+      "lore_ru": "Торм играет просто и честно, почти без трюков.\nПобеда доказывает, что вы понимаете базовую дисциплину\nмаршрута и открывает партию с Никой.",
+      "loss": "Torm blocks the tournament path until you win.",
+      "loss_ru": "Торм не злится, но дальше не пропускает. Нужна честная победа."
+    },
+    {
+      "id": "nika",
+      "name": "Ника",
+      "location": "Ржавый Узел — склад деталей",
+      "diff": "medium",
+      "personality": "yes_man",
+      "reward_caps": 260,
+      "win_flag": "win_nika",
+      "on_win_flags": [
+        "win_nika"
+      ],
+      "lore": "Nika plays through suits and exceptions. Numbers alone will not save you.",
+      "lore_ru": "Ника играет через масти и обходные решения.\nПобеда открывает право сыграть со старшим мастером Вельтом\nи учит искать выходы из плохих ситуаций.",
+      "loss": "Nika tells you to rebuild your options and try again.",
+      "loss_ru": "Ника советует собрать больше карт одной масти и вернуться сильнее."
+    },
+    {
+      "id": "velt",
+      "name": "Вельт",
+      "location": "Ржавый Узел — старшая мастерская",
+      "diff": "hard",
+      "personality": "house",
+      "reward_caps": 340,
+      "win_flag": "win_velt",
+      "on_win_flags": [
+        "win_velt"
+      ],
+      "lore": "Velt breaks weak plans. Win to get the repair record of the missing wagon.",
+      "lore_ru": "Вельт ломает слишком очевидные планы.\nПобеда открывает ведомость ремонта: телегу медицинского\nкаравана заранее готовили к каменному обходному тракту.",
+      "loss": "Velt keeps the repair record closed until you win.",
+      "loss_ru": "Вельт отказывается говорить о заказах мастерской. Нужно переиграть."
+    },
+    {
+      "id": "orren",
+      "name": "Оррен",
+      "location": "Лагерь Длинной Дороги",
+      "diff": "hard",
+      "personality": "house",
+      "reward_caps": 420,
+      "win_flag": "win_orren",
+      "on_win_flags": [
+        "win_orren"
+      ],
+      "lore": "Captain Orren will not open the route journal to a careless accuser.",
+      "lore_ru": "Оррен не отдаст журнал маршрутов человеку, который\nне выдерживает давления. Победа открывает архив\nи доказывает, что приказ был подделан.",
+      "loss": "Orren refuses access to the archive until a rematch is earned.",
+      "loss_ru": "Оррен считает подозрение пустым. Для реванша нужна подготовка."
+    },
+    {
+      "id": "roven",
+      "name": "Ровен",
+      "location": "Совет Сухих Колодцев",
+      "diff": "hard",
+      "personality": "house",
+      "reward_caps": 500,
+      "win_flag": "win_roven",
+      "on_win_flags": [
+        "win_roven"
+      ],
+      "lore": "Roven hides truth behind procedure. Win the public table to ask one official question.",
+      "lore_ru": "Ровен прячет правду за процедурой и формальностями.\nПобеда даёт право на официальный вопрос:\nкто заверил изменение маршрута каравана?",
+      "loss": "The council rejects the accusation until you win publicly.",
+      "loss_ru": "Совет отклоняет обвинение. Без победы имени Грина не будет."
+    },
+    {
+      "id": "grin",
+      "name": "Грин",
+      "location": "Заброшенная станция",
+      "diff": "hard",
+      "personality": "benny",
+      "reward_caps": 620,
+      "win_flag": "win_grin",
+      "on_win_flags": [
+        "win_grin"
+      ],
+      "lore": "Your mentor waits with the first deck he gave you. Win to make him confess.",
+      "lore_ru": "Грин ждёт на заброшенной станции с колодой,\nс которой всё началось. Победа открывает признание:\nон продал маршрут ради дочери Эли.",
+      "loss": "Grin refuses the confession until you can beat him.",
+      "loss_ru": "Грин говорит, что вы пока не выдержите правду. Признание закрыто."
+    },
+    {
+      "id": "klyk",
+      "name": "Клык",
+      "location": "Логово Пепельных Псов",
+      "diff": "impossible",
+      "personality": "benny",
+      "reward_caps": 900,
+      "win_flag": "win_klyk",
+      "on_win_flags": [
+        "win_klyk",
+        "elie_saved",
+        "truth_full"
+      ],
+      "lore": "The bandit leader stakes Eli and the final truth on the last table.",
+      "lore_ru": "Клык ставит на кон жизнь Эли и финальную правду.\nЭто проверка всех уроков: не жадничать, держать линию,\nчитать соперника и иметь запасной план.",
+      "loss": "Klyk keeps Eli and the final truth locked behind a rematch.",
+      "loss_ru": "Клык оставляет Эли у себя. Финал закрыт: нужен побег и реванш."
+    }
+  ]
+}

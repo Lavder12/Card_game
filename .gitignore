@@ -1,0 +1,24 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# PyInstaller build and distribution outputs
+Build_Release/
+build/
+dist/
+*.log
+logs/
+
+# Environment variables / secrets
+.env
+*.db
+*.sqlite
+
+# IDE and OS files
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
